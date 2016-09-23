@@ -7,9 +7,9 @@ public class FaireDesRectangles {
 		Rectangle R = new Rectangle();
 
 		R.creer();
+		R.afficher();
 
 		R.deplacer(-10, -5);
-		
 		R.afficher();
 
 	}
