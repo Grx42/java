@@ -43,4 +43,12 @@ public class Cercle extends Forme {
 		return 2 * Math.PI * r;
 	}
 	
+	public void agrandir()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.println("De combien voulez vous agrandir le cercle ? ");
+		int augmentation = sc.nextInt();
+		
+		r += augmentation;
+	}	
 }

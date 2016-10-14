@@ -11,13 +11,13 @@ public class FaireDesCercles
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Entrez la position x :");
-		A.x = sc.nextInt();
+		A.setPosX(sc.nextInt());
 
 		System.out.println("Entrez la position y :");
-		A.y = sc.nextInt();
+		A.setPosY(sc.nextInt());
 
 		System.out.println("Entrez le rayon du cercle :");
-		A.r = sc.nextInt();
+		A.setRayon(sc.nextInt());
 
 		A.afficher();
 

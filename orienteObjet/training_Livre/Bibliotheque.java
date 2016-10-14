@@ -5,32 +5,10 @@ import java.util.*;
 public class Bibliotheque {
 
 	public static void main(String[] args) {
-
-		Livre livrePoche = new Livre();
-		Scanner sc = new Scanner(System.in);
-		String codeAlphaUnique = "";
-
-		System.out.println("Entrez le titre du livre : ");
-		livrePoche.setTitre(sc.nextLine());
-
-		System.out.println("Entrez le nom de l'auteur : ");
-		livrePoche.setNomAuteur(sc.nextLine());
-
-		System.out.println("Entrez le prenom de l'auteur : ");
-		livrePoche.setPrenomAuteur(sc.nextLine());
-
-		System.out.println("Entrez la categorie du livre : ");
-		livrePoche.setCategorie(sc.nextLine());
-
-		System.out.println("Entrez le numero ISBN du livre : ");
-		livrePoche.setISBN(sc.nextLine());
-
-		codeAlphaUnique = livrePoche.calculerLeCode();
-		livrePoche.setCodeAlphaUnique(codeAlphaUnique);
-
-		livrePoche.afficherUnLivre();
-
-
+		
+		Livre unPolar = new Livre("Le mystere de la chambre jaune", "Leroux", "Gaston", "Policier", "2253005495");
+		
+		unPolar.afficherUnLivre();
 	}
 
 }

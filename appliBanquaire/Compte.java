@@ -2,65 +2,67 @@ package appliBanquaire;
 
 import java.util.*;
 
-public class Compte
-{
-    public String numDeCompte, typeDeCompte;
-    public float tauxEpargne, valeurPaiement, cpteCurrentValue;
-    public LigneComptable ligne;
-    public int nbLigneReel;
+import com.sun.org.apache.regexp.internal.recompile;
 
-    public void creerCpte()
+public class Compte {
+	
+    private String numDeCompte, typeDeCompte;
+    private float valeurPaiement;
+    protected float cpteCurrentValue;
+    private LigneComptable ligne;
+    private int nbLigneReel;
+
+    public String getNumDeCompte(){	return numDeCompte; }
+    public String getTypeDeCompte(){ return typeDeCompte; }
+    
+    public float getValeurPaiement(){ return valeurPaiement; }
+    public float getCpteCurrentValue(){ return cpteCurrentValue; }
+
+    public LigneComptable getLigne(){ return ligne; }
+    
+    public int getNbLigneReel(){ return nbLigneReel; }
+    
+    public Compte()
     {
         Scanner sc = new Scanner(System.in);
-        do {
-            String userEntry = "";
-            System.out.println("Type du compte [Types possibles : C(ourant), J(oint), E(pargne)] : ");
-            userEntry = sc.nextLine().toLowerCase();
-            userEntry = userEntry.substring(0, 1);
-            if(userEntry.equals("c"))
-                typeDeCompte = "courant";
-            else if(userEntry.equals("j"))
-                typeDeCompte = "joint";
-            else if(userEntry.equals("e"))
-                typeDeCompte = "epargne";
-        } while (!typeDeCompte.equals("courant") && !typeDeCompte.equals("joint") && !typeDeCompte.equals("epargne"));
-
+        
+        typeDeCompte = controleType();
+        
         System.out.println("Numero du compte : ");
         numDeCompte = sc.nextLine();
 
         //System.out.println("Premiere valeur creditee : ");
         //valeurPaiement = sc.nextFloat();
 
-        System.out.println("Valeur courrante du compte : ");
-        cpteCurrentValue = sc.nextFloat();
+        cpteCurrentValue = controleCurValInit();
 
-        if (typeDeCompte.equals("epargne"))
-        {
-            System.out.println("Taux de placement :");
-            tauxEpargne = sc.nextFloat();
-        }
-
-        System.out.print("Recapitulatif : ");
+        /*System.out.print("Recapitulatif : ");
         System.out.println("Type du compte : " + typeDeCompte);
         System.out.println("Numero du compte : " + numDeCompte);
-        System.out.println("Premiere valeur creditee : " + valeurPaiement);
-
-        if (typeDeCompte.equals("epargne"))
-        {
-            System.out.println("Taux de placement : " + tauxEpargne);
-        }
+        System.out.println("Premiere valeur creditee : " + valeurPaiement);*/
 
         nbLigneReel = 0;
+    }
+    
+    public Compte(String type)
+    {
+    	if(type.equalsIgnoreCase("Epargne"))
+    	{
+    		Scanner sc = new Scanner(System.in);
+    		typeDeCompte = type;
+    		
+    		System.out.println("Numero de compte : ");
+    		numDeCompte = sc.nextLine();
+    		
+    		cpteCurrentValue = controleCurValInit();
+    		nbLigneReel = 0;
+    	}
     }
 
     public void afficherCpte()
     {
         System.out.println("Numero de compte : " + numDeCompte);
         System.out.println("Type de compte : " + typeDeCompte);
-        if (typeDeCompte.equals("epargne"))
-        {
-            System.out.println("Taux d'\u00e9pargne : " + tauxEpargne);
-        }
         //System.out.println("Premi\u00e8re valeur cr\u00e9dit\u00e9e : " + valeurPaiement);
         System.out.println("Valeur courrante du compte : " + cpteCurrentValue);
         if (nbLigneReel > 0)
@@ -70,9 +72,44 @@ public class Compte
     public void creerLigne()
     {
         ligne = new LigneComptable();
-        ligne.creerLigneComptable();
-        cpteCurrentValue += ligne.montantOperation;
+        cpteCurrentValue += ligne.getMontantOperation();
         nbLigneReel = 1;
     }
-
+    
+    /*/# Methodes de controle #/*/
+    
+    private String controleType()
+    {
+    	char tmpC;
+    	String tmpS = "";
+    	Scanner sc = new Scanner(System.in);
+    	
+    	do {
+    		System.out.println("Type du compte [Types possibles : C(ourant), J(oint)] : ");
+    		tmpC = sc.nextLine().toUpperCase().charAt(0);
+		} while (tmpC != 'C' && tmpC != 'J');
+    	
+    	switch(tmpC){
+    		case 'C':
+    			tmpS = "Courant";
+    			break;
+    		case 'J':
+    			tmpS = "Joint";
+    			break;
+    	}
+    	return tmpS;
+    }
+    
+    private float controleCurValInit()
+    {
+    	float curVal;
+    	Scanner sc = new Scanner(System.in);
+    	
+    	do {
+			System.out.println("Valeur actuelle du compte : ");
+			curVal = sc.nextFloat(); 
+		} while (curVal < 0);
+    	
+    	return curVal;
+    }
 }

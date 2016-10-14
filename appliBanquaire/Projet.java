@@ -43,23 +43,27 @@ public class Projet {
 
 	public static void main(String[] args) {
 		byte choix;
-		String numeroLu = "";
+		String numeroLu = "", vide = "";
 		Scanner sc = new Scanner(System.in);
 
-		Compte compteBanquaire = new Compte();
+		Compte compteBanquaire = new Compte(vide);
 
 		do {
 			choix = menuPrincipal();
 			switch (choix)
 			{
 				case 1:
-					compteBanquaire.creerCpte();
+					System.out.println("Compte epargne ? o/n");
+					if(sc.nextLine().toLowerCase().charAt(0) == 'o')
+						compteBanquaire = new CpteEpargne();
+					else
+						compteBanquaire = new Compte();
 					break;
 
 				case 2:
 					System.out.println("Quel compte souhaitez-vous afficher ? ");
 					numeroLu = sc.nextLine();
-					if(numeroLu.equals(compteBanquaire.numDeCompte))
+					if(numeroLu.equals(compteBanquaire.getNumDeCompte()))
 						compteBanquaire.afficherCpte();
 					else
 						System.out.println("Le programme ne reconnait pas le compte " + numeroLu);
@@ -68,7 +72,7 @@ public class Projet {
 				case 3:
 					System.out.println("Pour quel compte souhaitez-vous cr\u00e9er une ligne ? ");
 					numeroLu = sc.nextLine();
-					if(numeroLu.equals(compteBanquaire.numDeCompte))
+					if(numeroLu.equals(compteBanquaire.getNumDeCompte()))
 						compteBanquaire.creerLigne();
 					else
 						System.out.println("Le programme ne reconnait pas le compte " + numeroLu);
