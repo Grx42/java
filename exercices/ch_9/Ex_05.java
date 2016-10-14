@@ -1,10 +1,22 @@
 package ch_9;
 
+import java.util.*;
+
+import com.sun.glass.ui.Size;
+
 public class Ex_05 {
 
 	public static void main(String[] args) {
 
-		int tab[][] = new int[7][7]; 
+		Scanner sc = new Scanner(System.in);
+		int size = 0;
+		do {
+			System.out.println("Entrez la taille de l'ast\u00e9risque : (impair)");
+			size = sc.nextInt();
+		} while (size % 2 != 1);
+			
+		
+		int tab[][] = new int[size][size]; 
 		
 		int milieu = tab.length / 2;
 		
