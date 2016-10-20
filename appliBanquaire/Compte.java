@@ -2,14 +2,13 @@ package appliBanquaire;
 
 import java.util.*;
 
-import com.sun.org.apache.regexp.internal.recompile;
-
 public class Compte {
 	
     private String numDeCompte, typeDeCompte;
     private float valeurPaiement;
     protected float cpteCurrentValue;
-    private LigneComptable ligne;
+    private LigneComptable[] ligne;
+    public final static int nbLigneMax = 10;
     private int nbLigneReel;
 
     public String getNumDeCompte(){	return numDeCompte; }
@@ -18,7 +17,7 @@ public class Compte {
     public float getValeurPaiement(){ return valeurPaiement; }
     public float getCpteCurrentValue(){ return cpteCurrentValue; }
 
-    public LigneComptable getLigne(){ return ligne; }
+    public LigneComptable[] getLigne(){ return ligne; }
     
     public int getNbLigneReel(){ return nbLigneReel; }
     
@@ -40,8 +39,8 @@ public class Compte {
         System.out.println("Type du compte : " + typeDeCompte);
         System.out.println("Numero du compte : " + numDeCompte);
         System.out.println("Premiere valeur creditee : " + valeurPaiement);*/
-
-        nbLigneReel = 0;
+        ligne = new LigneComptable[nbLigneMax];
+        nbLigneReel = -1;
     }
     
     public Compte(String type)
@@ -55,7 +54,8 @@ public class Compte {
     		numDeCompte = sc.nextLine();
     		
     		cpteCurrentValue = controleCurValInit();
-    		nbLigneReel = 0;
+    		ligne = new LigneComptable[nbLigneMax];
+    		nbLigneReel = -1;
     	}
     }
 
@@ -66,14 +66,36 @@ public class Compte {
         //System.out.println("Premi\u00e8re valeur cr\u00e9dit\u00e9e : " + valeurPaiement);
         System.out.println("Valeur courrante du compte : " + cpteCurrentValue);
         if (nbLigneReel > 0)
-            ligne.afficherLigne();
+        {
+        	for(int i = 0; i <= nbLigneReel; i++)
+        	{
+        		ligne[i].afficherLigne();
+        	}
+        }	
     }
 
     public void creerLigne()
     {
-        ligne = new LigneComptable();
-        cpteCurrentValue += ligne.getMontantOperation();
-        nbLigneReel = 1;
+    	if(nbLigneReel <  nbLigneMax)
+    	{
+    		nbLigneReel++;
+    		ligne[nbLigneReel] = new LigneComptable();
+    	}
+    	else if(nbLigneReel > nbLigneMax)
+    	{
+    		decalerLesLignes();
+    		ligne[nbLigneMax - 1] = new LigneComptable();
+    	}
+    	
+        cpteCurrentValue += ligne[nbLigneReel].getMontantOperation();
+    }
+    
+    private void decalerLesLignes()
+    {
+    	for(int i = 0; i < nbLigneMax; i++)
+    	{
+    		ligne[i -1] = ligne[i];
+    	}
     }
     
     /*/# Methodes de controle #/*/
