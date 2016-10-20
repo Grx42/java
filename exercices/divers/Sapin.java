@@ -25,7 +25,7 @@ public class Sapin {
 		{
 			for(int j = -i; j <= i; j++)
 			{
-				sapin[i][milieu+j] = 1;
+				sapin[i][milieu+j] = (int) (5 * Math.random() + 1);
 			}
 		}
 
@@ -35,7 +35,11 @@ public class Sapin {
 			{
 				if(sapin[k][l] == 0)
 					System.out.print(' ');
-				else
+				else if(sapin[k][l] == 2)
+					System.out.print('j');
+				else if(sapin[k][l] == 3)
+					System.out.print('o');
+				else 
 					System.out.print('.');
 			}
 			System.out.println();
